@@ -68,7 +68,7 @@ def ping():
 
 @app.route('/instance-data', methods=['GET'])
 def get_file_data():
-    with open('data.txt', 'r') as file:
+    with open('volumes/data.txt', 'r') as file:
         data = file.read()
     return jsonify({"data": data})
 
