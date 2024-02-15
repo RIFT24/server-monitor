@@ -3,7 +3,7 @@ import threading
 # import "packages" from flask
 from flask import render_template,request  # import render_template from "public" flask libraries
 from flask.cli import AppGroup
-
+from flask import jsonify
 
 # import "packages" from "this" project
 from __init__ import app, db, cors  # Definitions initialization
@@ -61,10 +61,21 @@ def generate_data():
     initUsers()
     initPlayers()
 
+# ping method
+@app.route('/ping', methods=['GET'])
+def ping():
+    return 'Pong!', 200
+
+@app.route('/instance-data', methods=['GET'])
+def get_file_data():
+    with open('data.txt', 'r') as file:
+        data = file.read()
+    return jsonify({"data": data})
+
 # Register the custom command group with the Flask application
 app.cli.add_command(custom_cli)
         
 # this runs the application on the development server
 if __name__ == "__main__":
     # change name for testing
-    app.run(debug=True, host="0.0.0.0", port="8086")
+    app.run(debug=True, host="0.0.0.0", port="8090")
